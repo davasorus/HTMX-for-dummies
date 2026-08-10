@@ -1,0 +1,46 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Todos</title>
+  <script src="/js/htmx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
+  <main class="mx-auto max-w-lg px-4 py-12">
+    <h1 class="mb-6 text-2xl font-semibold tracking-tight">Todos</h1>
+
+    <!-- Add todo form -->
+    <form
+      class="mb-6 flex gap-2"
+      hx-post="/todos"
+      hx-target="#todo-list"
+      hx-swap="outerHTML transition:true"
+      hx-on::after-request="if(event.detail.successful) this.reset()"
+    >
+      <input
+        type="text"
+        name="task"
+        required
+        placeholder="What needs doing?"
+        class="flex-1 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm placeholder-zinc-500 outline-none focus:border-zinc-400"
+      />
+      <button
+        type="submit"
+        class="rounded-lg bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white active:scale-95 transition"
+      >
+        Add
+      </button>
+    </form>
+
+    <!-- Todo list container -->
+    <% if (error) { %>
+      <%- include('partials/error', { message: error }) %>
+    <% } else { %>
+      <%- include('partials/todo-list', { todos }) %>
+    <% } %>
+  </main>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!-- views/partials/todo-list.ejs -->
+<div id="todo-list">
+  <% if (todos && todos.length > 0) { %>
+  <ul class="space-y-2">
+    <% todos.forEach(todo => { %>
+      <%- include('todo-item', { todo }) %>
+    <% }) %>
+  </ul>
+  <% } else { %>
+  <div class="rounded-lg border border-dashed border-zinc-800 p-8 text-center">
+    <p class="text-sm text-zinc-500">No todos yet!</p>
+  </div>
+  <% } %>
+</div>
